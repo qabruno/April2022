@@ -33,7 +33,7 @@ namespace April2022.Tests
 
             // Edit TM
             TMPage tMPageObj = new TMPage();
-            tMPageObj.EditTM(driver);
+            tMPageObj.EditTM(driver, "bruno");
         }
 
         [Test, Order (3)]
