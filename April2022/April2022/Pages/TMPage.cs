@@ -78,7 +78,7 @@ namespace April2022.Pages
             return actualPrice.Text;
         }
 
-        public void EditTM(IWebDriver driver, string description)
+        public void EditTM(IWebDriver driver, string description, string code, string price)
         {
             // Wait until the entire TM page is displayed
             Wait.WaitToBeVisible(driver, "XPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[1]/td[1]", 2);
@@ -103,7 +103,7 @@ namespace April2022.Pages
             // Edit code
             IWebElement codeTextbox = driver.FindElement(By.Id("Code"));
             codeTextbox.Clear();
-            codeTextbox.SendKeys("EditedApril2022");
+            codeTextbox.SendKeys(code);
 
             // Edit description
             IWebElement descriptionTextbox = driver.FindElement(By.Id("Description"));
@@ -117,7 +117,7 @@ namespace April2022.Pages
             priceTag.Click();
             priceTextbox.Clear();
             priceTag.Click();
-            priceTextbox.SendKeys("170");
+            priceTextbox.SendKeys(price);
 
             // Click on save button
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
@@ -128,23 +128,24 @@ namespace April2022.Pages
             IWebElement goToLastPageButton1 = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]/span"));
             goToLastPageButton1.Click();
             Thread.Sleep(1000);
-
-            // Assertion
-            IWebElement createdCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
-            IWebElement createdTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
-            IWebElement createdDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
-            IWebElement createdPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
-
-            Assert.That(createdCode.Text == "EditedApril2022", "Code record hasn't been edited.");
-            Assert.That(createdTypeCode.Text == "M", "TypeCode record hasn't been edited.");
-            Assert.That(createdDescription.Text == "EditedApril2022", "Description record hasn't been edited.");
-            Assert.That(createdPrice.Text == "$170.00", "Price record hasn't been edited.");
         }
 
         public string GetEditedDescription(IWebDriver driver)
         {
             IWebElement createdDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
             return createdDescription.Text;
+        }
+
+        public string GetEditedCode(IWebDriver driver)
+        {
+            IWebElement createdCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+            return createdCode.Text;
+        }
+
+        public string GetEditedPrice(IWebDriver driver)
+        {
+            IWebElement createdPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+            return createdPrice.Text;
         }
 
         public void DeleteTM(IWebDriver driver)
